@@ -8,6 +8,7 @@ var equal = document.querySelector("#equal");
 var point = document.querySelector("#point");
 
 var ptCounter = 0;
+var ptCounter2 = 0;
 var results = ["", "", ""];
 
 for (var i = 0; i < numbers.length; i++) {
@@ -15,17 +16,32 @@ for (var i = 0; i < numbers.length; i++) {
     if (this.value == ".") {
       ptCounter++;
     }
-    if (results[1] == "" && ptCounter <= 1) {
+    if (results[1] == "") {
+      if (ptCounter != 0) {
+        point.disabled = true;
+        ptCounter = 0;
+      }
       input.value = input.value + this.value;
       startNum.style.color = "transparent";
       results[0] = input.value;
-    } else if (results[1] != "" && ptCounter <= 1) {
+    }
+    if (results[1] != "") {
+      if (results[2] == "") {
+        point.disabled = false;
+      }
+      if (this.value == ".") {
+        ptCounter2++;
+      }
+      if (this.value == "." && ptCounter2 != 0) {
+        point.disabled = true;
+      }
       input.value = input.value + this.value;
       startNum.style.color = "transparent";
       results[2] = results[2] + this.value;
     }
   })
 }
+
 
 for (var i = 0; i < operators.length; i++) {
   operators[i].addEventListener("click", function() {
@@ -46,6 +62,7 @@ delAll.addEventListener("click", function() {
   for (var i = 0; i < buttons.length; i++) {
     buttons[i].disabled = false;
   }
+  delAll.style.border = "0";
 })
 
 equal.addEventListener("click", function() {
@@ -55,4 +72,7 @@ equal.addEventListener("click", function() {
     buttons[i].disabled = true;
   }
   delAll.disabled = false;
+  delAll.style.border = "1px solid rgb(0, 212, 255)";
+  startNum.style.color = "transparent";
+
 })
